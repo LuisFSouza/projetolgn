@@ -1,4 +1,5 @@
 const express = require('express')
+const knex = require('./src/database')
 
 const app = express()
 
