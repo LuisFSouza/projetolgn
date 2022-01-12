@@ -30,11 +30,41 @@ function save(user){
   })
 }
 
+/**
+ * Altera um usuario no banco de dados
+ * @param {object} user  O usuario deve estar no seguinte formato:
+ * {email: <string>, password: <string>}
+ * @param {int} id ID do usuario
+ * @returns {object} Mensagem de sucesso ou de erro
+ */
+ function edit(user, id){
+  return db('users').where('id', id).update(user)
+  .then( _ => {
+    return { tipo: "sucesso", corpo: "Usuario alterado com sucesso!" }
+  })
+  .catch(erro => {
+    return { tipo: "erro", corpo: "Erro: " + erro }
+  })
+}
 
+/**
+ * Seleciona um usuario
+ * @param {int} id  ID do usuario que será selecionado
+ * @returns {object} Objeto com o usuario selecionado
+ */
+ function selectUser(id){
+  return db.select('*').from('users').where('id', id).first()
+  .then(user => { return user })
+  .catch(erro => {
+    return { tipo: "erro", corpo: "Erro: " + erro }
+  })
+}
 
 module.exports =
 {
   selectUsers,
-  save
+  save,
+  selectUser,
+  edit
 }
   

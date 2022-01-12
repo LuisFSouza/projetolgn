@@ -16,14 +16,35 @@
 <body>
 
     <% if (typeof user !== 'undefined') { %>
-        <% var titulo = "Alterar Aviso" %>
-        <% var rota = "/users/editar/"+user.id %>
+        <% var titulo = "Alterar Usuario" %>
+        <% var rota = "/users/edit/"+user.id %>
       <% } else { %>
         <% var titulo = "Novo Usuario" %>
         <% var rota = "/users/new" %>
     <% } %>
 
   <div class="container pt-5">
+
+    <% if (typeof msg !== 'undefined'){ %>
+      
+      <% if (msg.tipo === 'sucesso'){ %>
+        <div class="alert alert-success alert-dismissible fade show p-4" role="alert">
+          <strong><i class="fas fa-check-circle"></i> Sucesso! </strong><%= msg.corpo %> 
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      <% } %>
+      <% if (msg.tipo === 'erro'){ %>
+        <div class="alert alert-danger alert-dismissible fade show p-4" role="alert">
+          <strong><i class="fas fa-exclamation-circle"></i> Erro! </strong><%= msg.corpo %> 
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      <% } %>
+    <% } %>
+
     <div class="card shadow">
       <div class="card-header d-flex justify-content-between ">
         <h2 class="float-left card-title"></i> <%= titulo %> </h2>
@@ -32,11 +53,11 @@
         <form action="<%= rota %>" method="post"> 
             <div class="mb-3">
               <label for="email">Email</label>
-              <input type="email" class="form-control" id="email" name="email" required <%= typeof user !== 'undefined' ? 'aaaaaa' : 'bbbbb' %> placeholder="Digite o email">
+              <input type="email" class="form-control" id="email" name="email" required value="<%= typeof user !== 'undefined' ? user.email : null %>" placeholder="Digite o email">
             </div>
             <div class="mb-3">
               <label for="password">Senha</label>
-              <input type="password" class="form-control" id="password" name="password" required <%= typeof user != 'undefined' ? user.password : null %> placeholder="Digite a senha">
+              <input type="password" class="form-control" id="password" name="password" required value="<%= typeof user != 'undefined' ? user.password : null %>" placeholder="Digite a senha">
             </div>
             <div class="text-center"><button type="submit" class="btn btn-primary ">Cadastrar</button></div>
           </form>
