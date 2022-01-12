@@ -60,11 +60,20 @@ function save(user){
   })
 }
 
+/**
+ * Função que exclui um usuario do banco de dados
+ * @param {int} id ID do usuario
+ */
+ function remove(id){
+  return db.del().from('users').where('id', id)
+}
+
 module.exports =
 {
   selectUsers,
   save,
   selectUser,
-  edit
+  edit,
+  remove
 }
   

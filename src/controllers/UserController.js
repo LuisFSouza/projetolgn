@@ -43,5 +43,10 @@ routes.post("/users/edit/:id", async(req,res)=>{
     }
   })
 
+routes.get("/users/delete/:id", async(req,res)=>{
+    const id = Number(req.params.id)
+    await User.remove(id)
+    res.redirect('/users')
+  })
 
 module.exports = routes
