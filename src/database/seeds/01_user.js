@@ -1,3 +1,4 @@
+const bcrypt = require('bcryptjs')
 const dotenv = require('dotenv')
 dotenv.config()
 
@@ -7,7 +8,7 @@ exports.seed = function(knex) {
     .then(function () {
       // Inserts seed entries
       return knex('users').insert([
-        {email:'user1', password:process.env.PASS_ADMIN},
+        {email:'user1@gmail.com', password: bcrypt.hashSync(process.env.PASS_ADMIN, 10)}
       ]);
     });
 };

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
   <!-- Required meta tags -->
@@ -15,7 +15,12 @@
 
 <body>
   <div class="container pt-5">
+    <form action="/logout" method="post">
+      <button type="submit" class="btn btn-danger mb-5 ">Deslogar</button>
+    </form>
+
     <div class="card shadow text-center">
+
       <div class="card-header d-flex justify-content-between ">
         <h2 class="float-left card-title"></i> Usuarios cadastrados</h2>
         <a href="/users/new" class="btn btn-success float-right btn-lg"></i> Novo Usuario</a>
@@ -50,9 +55,12 @@
               <% }) %>
           </tbody>
         </table>
-      </div><!--card-body-->
-    </div><!--card-->
-  </div><!--container-->
+      </div>
+      <!--card-body-->
+    </div>
+    <!--card-->
+  </div>
+  <!--container-->
 
 
   <!-- Optional JavaScript; choose one of the two! -->

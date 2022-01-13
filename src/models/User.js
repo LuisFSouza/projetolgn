@@ -1,6 +1,5 @@
 const db = require('../database/index')
 
-
 /**
  * Seleciona todos os usuarios cadastrados
  * @returns {object} Objeto com todos os usuarios cadastrados ou
@@ -16,14 +15,14 @@ function selectUsers(){
 
 /**
  * Inserir um usuario no banco de dados
- * @param {object} user O user deve estar no seguinte formato:
+ * @param {object} user O usuario deve estar no seguinte formato:
  * {email: <string>, password: <string>}
  * @returns {object} Mensagem de sucesso ou de erro
  */
 function save(user){
   return db.insert(user).into('users')
   .then( _ => { 
-    return { tipo: "sucesso", corpo: "Dados inseridos com sucesso!" }
+    return { tipo: "sucesso", corpo: "Usuario cadastrado com sucesso!" }
   })
   .catch(erro => {
     return { tipo: "erro", corpo: "Erro: " + erro }
@@ -50,11 +49,38 @@ function save(user){
 /**
  * Seleciona um usuario
  * @param {int} id  ID do usuario que será selecionado
- * @returns {object} Objeto com o usuario selecionado
+ * @returns {object} Objeto com o usuario selecionado 
+ * ou uma mensagem de erro
  */
  function selectUser(id){
-  return db.select('*').from('users').where('id', id).first()
+  return db.select('*').from('users').where('id', id ).first()
   .then(user => { return user })
+  .catch(erro => {
+    return { tipo: "erro", corpo: "Erro: " + erro }
+  })
+  
+}
+
+/**
+ * Seleciona um usuario filtrando pelo email
+ * @param {string} email  email do usuario que será selecionado
+ * @returns {object} Objeto com o usuario selecionado
+ */
+ function selectUserByEmail(email){
+  return db.select('*').from('users').where('email', email ).first()
+  .then(user => { return user })
+  .catch(erro => {
+    return { tipo: "erro", corpo: "Erro: " + erro }
+  })
+}
+
+/**
+ * Seleciona um usuario filtrando pelo email para o login
+ * @param {string} email  email do usuario que será selecionado
+ * @returns {object} Objeto com o usuario selecionado
+ */
+ function selectUserbyEmailLogin(email){
+  return db.select('*').from('users').where('email', email)
   .catch(erro => {
     return { tipo: "erro", corpo: "Erro: " + erro }
   })
@@ -66,6 +92,22 @@ function save(user){
  */
  function remove(id){
   return db.del().from('users').where('id', id)
+  .catch(erro => {
+    return { tipo: "erro", corpo: "Erro: " + erro }
+  })
+}
+
+/**
+ * Seleciona um usuario para deserializar no login
+ * @param {int} id  ID do usuario que será selecionado
+ * @returns {object} Objeto com o usuario selecionado 
+ * ou uma mensagem de erro
+ */
+ function selectUserDeserializeLogin(id){
+  return db.select('*').from('users').where('id', id ).first()
+  .catch(erro => {
+    return { tipo: "erro", corpo: "Erro: " + erro }
+  })
 }
 
 module.exports =
@@ -74,6 +116,9 @@ module.exports =
   save,
   selectUser,
   edit,
-  remove
+  remove,
+  selectUserByEmail,
+  selectUserbyEmailLogin,
+  selectUserDeserializeLogin
 }
   
