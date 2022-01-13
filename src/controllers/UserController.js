@@ -41,8 +41,8 @@ module.exports = {
     const id = Number(req.params.id)
     const email = xss(req.body.email)
     
-    const result = await User.selectUserByEmail(email);
-    const result2 = await User.selectUserById(id).then(user => { return user });
+    const result = await User.selectUserByEmail(email).then(user => { return user })
+    const result2 = await User.selectUserById(id).then(user => { return user })
 
     if (Object.keys(result).length === 0 || result[0]['email'] === result2['email']) {
       const password = bcrypt.hashSync(xss(req.body.password), 10)
