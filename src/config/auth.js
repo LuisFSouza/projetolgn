@@ -4,17 +4,13 @@ const User = require('../models/User')
 
 module.exports = function(passport) {
     passport.use(new LocalStrategy({ usernameField: "email", passwordField: "password" }, (email, password, done) => {
-        User.selectUserbyEmailLogin(email).then((user) => {
+        User.selectUserByEmail(email).then((user) => {
 
             if (Object.keys(user).length === 0) {   
                 return done(null, false);
             }
             
-            for (var prop in user) {
-                passwordUser = user[prop].password
-            }
-            
-            const res = bcrypt.compare(password, passwordUser, (err, resp) => {
+            const res = bcrypt.compare(password, user[0]['password'], (err, resp) => {
                 if (resp) {
                     return done(null, user);
                 } else {
@@ -26,16 +22,11 @@ module.exports = function(passport) {
     }));
     
     passport.serializeUser((user, done) => {
-
-        for (var prop in user) {
-            idUser = user[prop].id
-        }
-        done(null, idUser);
+        done(null, user[0]['id']);
     });
 
     passport.deserializeUser((id, done) => {
-        
-        User.selectUserDeserializeLogin(id).then((res) => {
+        User.selectUserById(id).then((res) => {
             if (!res) {
                 return done(null, false);
                 

@@ -47,14 +47,13 @@ function save(user){
 }
 
 /**
- * Seleciona um usuario
+ * Seleciona um usuario pelo id
  * @param {int} id  ID do usuario que será selecionado
  * @returns {object} Objeto com o usuario selecionado 
  * ou uma mensagem de erro
  */
- function selectUser(id){
+ function selectUserById(id){
   return db.select('*').from('users').where('id', id ).first()
-  .then(user => { return user })
   .catch(erro => {
     return { tipo: "erro", corpo: "Erro: " + erro }
   })
@@ -67,20 +66,8 @@ function save(user){
  * @returns {object} Objeto com o usuario selecionado
  */
  function selectUserByEmail(email){
-  return db.select('*').from('users').where('email', email ).first()
-  .then(user => { return user })
-  .catch(erro => {
-    return { tipo: "erro", corpo: "Erro: " + erro }
-  })
-}
-
-/**
- * Seleciona um usuario filtrando pelo email para o login
- * @param {string} email  email do usuario que será selecionado
- * @returns {object} Objeto com o usuario selecionado
- */
- function selectUserbyEmailLogin(email){
-  return db.select('*').from('users').where('email', email)
+  return db.select('*').from('users').where('email', email )
+  
   .catch(erro => {
     return { tipo: "erro", corpo: "Erro: " + erro }
   })
@@ -97,28 +84,13 @@ function save(user){
   })
 }
 
-/**
- * Seleciona um usuario para deserializar no login
- * @param {int} id  ID do usuario que será selecionado
- * @returns {object} Objeto com o usuario selecionado 
- * ou uma mensagem de erro
- */
- function selectUserDeserializeLogin(id){
-  return db.select('*').from('users').where('id', id ).first()
-  .catch(erro => {
-    return { tipo: "erro", corpo: "Erro: " + erro }
-  })
-}
-
 module.exports =
 {
   selectUsers,
   save,
-  selectUser,
+  selectUserById,
   edit,
   remove,
-  selectUserByEmail,
-  selectUserbyEmailLogin,
-  selectUserDeserializeLogin
+  selectUserByEmail
 }
   

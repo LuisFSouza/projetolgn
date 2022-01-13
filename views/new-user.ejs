@@ -30,14 +30,17 @@
             <% var rota="/users/new" %>
               <% } %>
 
-                <div class="container pt-5">
-                  <br><br>
+                <div class="container pt-5">  
+                  <br>
+                  <br>
+                  <a  class="btn btn-secondary" href="/users"> Usuarios </a>
+                  <br>
+                  <br>
                   <form action="/logout" method="post">
                     <button type="submit" class="btn btn-danger ">Deslogar</button>
                   </form>
-                  <br><br>
-                  <br><br>
-                  <a href="javascript:history.back()"><i class="fas fa-long-arrow-alt-left"></i> Voltar</a>
+                  <br>
+                  <a href="javascript:history.back()"> Voltar</a>
                   <br><br>
 
                   <% if (typeof msg !=='undefined' ){ %>

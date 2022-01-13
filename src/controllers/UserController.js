@@ -15,9 +15,9 @@ module.exports = {
   async insertUser(req, res) {
     const email = xss(req.body.email)
     
-    const result = await User.selectUserByEmail(email)
+    const result = await User.selectUserByEmail(email).then(user => { return user })
 
-    if (result === undefined) {
+    if (Object.keys(result).length === 0) {
       const password = bcrypt.hashSync(xss(req.body.password), 10)
 
       const msg = await User.save({ email, password })
@@ -33,7 +33,7 @@ module.exports = {
 
   async renderViewEditUser(req, res) {
     const id = Number(req.params.id)
-    const user = await User.selectUser(id)
+    const user = await User.selectUserById(id).then(user => { return user })
     res.render('new-user', { user })
   },
 
@@ -42,9 +42,9 @@ module.exports = {
     const email = xss(req.body.email)
     
     const result = await User.selectUserByEmail(email);
-    const result2 = await User.selectUser(id);
+    const result2 = await User.selectUserById(id).then(user => { return user });
 
-    if (result === undefined || result['email'] === result2['email']) {
+    if (Object.keys(result).length === 0 || result[0]['email'] === result2['email']) {
       const password = bcrypt.hashSync(xss(req.body.password), 10)
       if(xss(req.body.password) != "")
       {
@@ -70,13 +70,12 @@ module.exports = {
       }
     }
     else {
-      const user = await User.selectUser(id)
+      const user = await User.selectUserById(id).then(user => { return user })
       const msg = { tipo: "erro", corpo: "Este email ja está cadastrado. O campo email foi restaurado para seu valor original" }
       res.render('new-user', { msg, user })
     }
 
   },
-
 
   async deleteUser(req, res) {
     const id = Number(req.params.id)
