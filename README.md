@@ -45,7 +45,5 @@ npx knex migrate:latest
 npx knex seed:run
 ```
 
-
-
-
+O email do usuário pre-definido será `user1@gmail.com` e a senha será a digitada no campo PASS_ADMIN do arquivo `.env`
 
